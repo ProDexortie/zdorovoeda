@@ -1,0 +1,107 @@
+.meal-plan-page {
+  padding: var(--spacing-lg) var(--spacing-md);
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+.meal-plan-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.meal-plan-header h1 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.meal-plan-header p {
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+.meal-plan-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-xl);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tab-button {
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tab-button:hover {
+  color: var(--primary-color);
+}
+
+.tab-button.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+.auth-required-message,
+.no-recommendations-message {
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  text-align: center;
+  margin: var(--spacing-xl) 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.auth-required-message h3,
+.no-recommendations-message h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color);
+}
+
+.auth-required-message p,
+.no-recommendations-message p {
+  color: var(--text-light);
+  margin-bottom: var(--spacing-lg);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.auth-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .meal-plan-header h1 {
+    font-size: 2rem;
+  }
+  
+  .meal-plan-header p {
+    font-size: 1rem;
+  }
+  
+  .tab-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 1rem;
+  }
+  
+  .auth-required-message h3,
+  .no-recommendations-message h3 {
+    font-size: 1.3rem;
+  }
+  
+  .auth-buttons {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+}

@@ -1,0 +1,32 @@
+.meal-detail-page {
+  padding: var(--spacing-lg) var(--spacing-md);
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+.loading-container, .error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.similar-meals-section {
+  margin-top: var(--spacing-xxl);
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid var(--border-color);
+}
+
+.similar-meals-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: var(--spacing-xl);
+  color: var(--text-color);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .similar-meals-title {
+    font-size: 1.8rem;
+  }
+}

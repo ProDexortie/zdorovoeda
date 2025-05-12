@@ -1,0 +1,124 @@
+.meal-list-container {
+  margin-bottom: var(--spacing-xxl);
+}
+
+.meal-list-title {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-color);
+  position: relative;
+  padding-bottom: var(--spacing-md);
+}
+
+.meal-list-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+}
+
+.meal-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+}
+
+.filter-btn {
+  background-color: var(--background-light);
+  border: 1px solid var(--border-color);
+  color: var(--text-light);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.filter-btn:hover {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.filter-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.meals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.meal-grid-item {
+  display: flex;
+  height: 100%;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xxl) 0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--background-light);
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--spacing-md);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.no-meals-message {
+  text-align: center;
+  padding: var(--spacing-xxl) 0;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .meal-list-title {
+    font-size: 1.8rem;
+  }
+  
+  .meals-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--spacing-md);
+  }
+}
+
+@media (max-width: 576px) {
+  .meal-list-title {
+    font-size: 1.5rem;
+  }
+  
+  .filter-btn {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+  
+  .meals-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,217 @@
+.checkout-page {
+  padding: var(--spacing-lg) var(--spacing-md);
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+.checkout-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.checkout-header h1 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+}
+
+.checkout-content {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: var(--spacing-xl);
+}
+
+.checkout-form {
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-lg);
+}
+
+.form-section {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.form-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.form-section h2 {
+  font-size: 1.3rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.payment-method {
+  position: relative;
+}
+
+.payment-method input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.payment-method label {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.payment-method input[type="radio"]:checked + label {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 1px var(--primary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.05);
+}
+
+.payment-method-icon {
+  margin-right: var(--spacing-md);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  border-radius: 50%;
+  color: var(--primary-color);
+}
+
+.payment-method-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-method-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-color);
+}
+
+.payment-method-description {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.place-order-btn {
+  margin-top: var(--spacing-lg);
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  height: 50px;
+}
+
+.place-order-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Сводка заказа */
+.order-summary {
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-lg);
+  align-self: flex-start;
+  position: sticky;
+  top: 20px;
+}
+
+.order-summary h2 {
+  font-size: 1.3rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--spacing-sm);
+}
+
+.order-items {
+  margin-bottom: var(--spacing-lg);
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.order-item:last-child {
+  margin-bottom: var(--spacing-md);
+}
+
+.order-item-info {
+  display: flex;
+  align-items: center;
+}
+
+.order-item-quantity {
+  margin-right: var(--spacing-sm);
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.order-item-name {
+  color: var(--text-color);
+}
+
+.order-item-price {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: var(--spacing-md);
+  border-top: 2px solid var(--border-color);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+  .checkout-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .order-summary {
+    position: static;
+    margin-top: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .checkout-header h1 {
+    font-size: 2rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+  
+  .payment-method label {
+    padding: var(--spacing-sm);
+  }
+}

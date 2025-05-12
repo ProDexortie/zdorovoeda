@@ -1,0 +1,88 @@
+.dietary-preferences-form {
+  padding: var(--spacing-xl);
+}
+
+.dietary-preferences-form h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.8rem;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.dietary-restrictions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
+.restriction-option {
+  display: flex;
+  align-items: center;
+}
+
+.restriction-option input[type="checkbox"] {
+  margin-right: var(--spacing-sm);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.restriction-option label {
+  cursor: pointer;
+}
+
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Стилизация range input */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: var(--background-light);
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+  border: none;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .dietary-preferences-form {
+    padding: var(--spacing-lg);
+  }
+  
+  .dietary-preferences-form h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .dietary-preferences-form {
+    padding: var(--spacing-md);
+  }
+  
+  .dietary-restrictions {
+    grid-template-columns: 1fr;
+  }
+}
