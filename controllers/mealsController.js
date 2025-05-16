@@ -175,37 +175,71 @@ export const getMealRecommendations = async (req, res) => {
       return res.status(404).json({ message: 'Пользователь не найден' });
     }
 
-    // Формируем запрос на основе диетических предпочтений пользователя
-    const query = {};
+    console.log('Диетические предпочтения пользователя:', user.dietaryPreferences);
     
-    // Фильтр по калориям (±200 от предпочтений пользователя)
-    if (user.dietaryPreferences.calories) {
+    // Проверяем наличие диетических предпочтений
+    if (!user.dietaryPreferences) {
+      return res.json({
+        breakfast: [],
+        lunch: [],
+        dinner: [],
+        snacks: []
+      });
+    }
+
+    // Начинаем формировать базовый запрос - только доступные блюда
+    let query = { available: true };
+    
+    // Массив для хранения дополнительных опциональных условий
+    const additionalCriteria = [];
+    
+    // Добавляем фильтр по калориям с более широким диапазоном, если указаны
+    if (user.dietaryPreferences.calories && user.dietaryPreferences.calories > 0) {
       const targetCalories = user.dietaryPreferences.calories;
-      query.calories = { 
-        $gte: targetCalories - 200, 
-        $lte: targetCalories + 200 
-      };
+      // Расширяем диапазон до ±30% от целевого значения для большей вероятности найти блюда
+      const caloriesMin = Math.max(0, targetCalories - targetCalories * 0.3);
+      const caloriesMax = targetCalories + targetCalories * 0.3;
+      
+      additionalCriteria.push({ calories: { $gte: caloriesMin, $lte: caloriesMax } });
     }
     
-    // Фильтр по диетическим ограничениям
+    // Добавляем фильтр по диетическим ограничениям, если указаны
     if (user.dietaryPreferences.restrictions && user.dietaryPreferences.restrictions.length > 0) {
-      query.dietaryCategories = { $all: user.dietaryPreferences.restrictions };
+      // Используем $in вместо $all для более гибкого поиска
+      // Блюдо должно содержать хотя бы одну из указанных категорий
+      additionalCriteria.push({ dietaryCategories: { $in: user.dietaryPreferences.restrictions } });
     }
+
+    // Если есть дополнительные критерии, добавляем их в запрос
+    if (additionalCriteria.length > 0) {
+      // Если блюдо соответствует хотя бы одному из дополнительных критериев, оно подходит
+      query.$or = additionalCriteria;
+    }
+
+    console.log('Запрос для поиска рекомендаций:', JSON.stringify(query));
+
+    // Получаем все доступные блюда и ограничиваем выборку до 20 блюд
+    let allMeals = await Meal.find(query).limit(20);
     
-    // Ищем подходящие блюда
-    const recommendations = await Meal.find(query).limit(10);
+    console.log(`Найдено ${allMeals.length} блюд, соответствующих критериям`);
     
+    // Если подходящих блюд не найдено, берем просто несколько доступных блюд
+    if (allMeals.length === 0) {
+      console.log('Не найдено блюд по указанным критериям, выбираем доступные блюда');
+      allMeals = await Meal.find({ available: true }).limit(20);
+    }
+
     // Группируем рекомендации по типу приема пищи
     const mealPlan = {
-      breakfast: recommendations.filter(meal => meal.mealType === 'Завтрак'),
-      lunch: recommendations.filter(meal => meal.mealType === 'Обед'),
-      dinner: recommendations.filter(meal => meal.mealType === 'Ужин'),
-      snacks: recommendations.filter(meal => meal.mealType === 'Перекус'),
+      breakfast: allMeals.filter(meal => meal.mealType === 'Завтрак'),
+      lunch: allMeals.filter(meal => meal.mealType === 'Обед'),
+      dinner: allMeals.filter(meal => meal.mealType === 'Ужин'),
+      snacks: allMeals.filter(meal => meal.mealType === 'Перекус'),
     };
     
     res.json(mealPlan);
   } catch (error) {
-    console.error(error);
+    console.error('Ошибка при получении рекомендаций:', error);
     res.status(500).json({ message: 'Ошибка сервера' });
   }
 };
