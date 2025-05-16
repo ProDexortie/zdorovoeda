@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import AddMealModal from '../components/Admin/AddMealModal';
 import './AdminPage.css';
 
 const AdminPage = () => {
@@ -13,6 +14,7 @@ const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAddMealModalOpen, setIsAddMealModalOpen] = useState(false);
   
   // Проверка наличия доступа администратора
   useEffect(() => {
@@ -142,6 +144,33 @@ const AdminPage = () => {
       console.error('Ошибка при обновлении доступности:', err);
     }
   };
+
+  // Обработчик создания нового блюда
+  const handleCreateMeal = async (mealData) => {
+    try {
+      const response = await fetch('/api/meals', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+        body: JSON.stringify(mealData),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Ошибка при создании блюда');
+      }
+      
+      // Добавляем новое блюдо в список и закрываем модальное окно
+      setMeals([...meals, data]);
+      setIsAddMealModalOpen(false);
+    } catch (err) {
+      console.error('Ошибка при создании блюда:', err);
+      throw err; // Перебрасываем ошибку, чтобы обработать ее в форме
+    }
+  };
   
   // Форматирование даты
   const formatDate = (dateString) => {
@@ -261,7 +290,9 @@ const AdminPage = () => {
             <div className="admin-meals">
               <div className="admin-section-header">
                 <h2>Управление блюдами</h2>
-                <button className="btn">Добавить новое блюдо</button>
+                <button className="btn" onClick={() => setIsAddMealModalOpen(true)}>
+                  Добавить новое блюдо
+                </button>
               </div>
               
               <div className="admin-table-container">
@@ -405,6 +436,13 @@ const AdminPage = () => {
           )}
         </div>
       )}
+
+      {/* Модальное окно для добавления блюда */}
+      <AddMealModal 
+        isOpen={isAddMealModalOpen} 
+        onClose={() => setIsAddMealModalOpen(false)} 
+        onSubmit={handleCreateMeal}
+      />
     </div>
   );
 };
