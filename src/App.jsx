@@ -18,6 +18,7 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderHistoryPage from './pages/OrderHistoryPage';
 import AdminPage from './pages/AdminPage';
+import OrderDetailPage from './pages/OrderDetailPage';
 
 // CSS
 import './styles/global.css';
@@ -41,6 +42,7 @@ const App = () => {
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/orders" element={<OrderHistoryPage />} />
                 <Route path="/admin" element={<AdminPage />} />
+                <Route path="/orders/:id" element={<OrderDetailPage />} />
               </Routes>
             </main>
             <Footer />
