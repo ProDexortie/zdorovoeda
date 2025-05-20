@@ -152,7 +152,7 @@ export const deleteMeal = async (req, res) => {
     const meal = await Meal.findById(req.params.id);
 
     if (meal) {
-      await meal.remove();
+      await meal.deleteOne({ _id: req.params.id });
       res.json({ message: 'Блюдо удалено' });
     } else {
       res.status(404).json({ message: 'Блюдо не найдено' });
